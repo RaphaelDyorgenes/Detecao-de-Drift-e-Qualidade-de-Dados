@@ -1,0 +1,19 @@
+# =============================================================================
+# Tech Challenge 04 — Observabilidade, Detecção de Drift e Qualidade de Dados
+# =============================================================================
+
+# Modelagem e Machine Learning
+scikit-learn>=1.5.0
+xgboost>=2.0.0
+joblib>=1.4.0
+
+# Manipulação e Estatística
+pandas>=2.2.0
+numpy>=1.26.0
+scipy>=1.11.0
+
+# Validação e Qualidade de Dados (Data Contracts)
+pandera>=0.20.0
+
+# Detecção de Drift e Relatórios de Observabilidade
+evidently>=0.7.0

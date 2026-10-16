@@ -1,0 +1,30 @@
+# =============================================================================
+# Arquivos e diretórios ignorados pelo Git
+# =============================================================================
+
+# Ambiente virtual Python
+.venv/
+venv/
+
+# Caches e arquivos temporários de execução
+__pycache__/
+*.py[cod]
+*$py.class
+.cache/
+
+# Jupyter Notebooks - checkpoints
+.ipynb_checkpoints/
+
+# Configurações de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Arquivos do sistema operacional
+Thumbs.db
+.DS_Store
+
+# Variáveis de ambiente e credenciais
+.env
+.env.local

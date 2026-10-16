@@ -1,0 +1,158 @@
+{
+  "timestamp": "2026-10-15T23:06:15.918450",
+  "total_features_evaluated": 19,
+  "total_drifted_features": 6,
+  "features": {
+    "credit_amount": {
+      "type": "numeric",
+      "test": "KS + PSI",
+      "ks_statistic": 0.172,
+      "ks_p_value": 5.573805807784952e-65,
+      "psi_value": 0.2092,
+      "psi_interpretation": "Moderado (0.10 <= PSI < 0.25)",
+      "drift_detected": true
+    },
+    "duration": {
+      "type": "numeric",
+      "test": "KS + PSI",
+      "ks_statistic": 0.521,
+      "ks_p_value": 0.0,
+      "psi_value": 2.8844,
+      "psi_interpretation": "Substancial (PSI >= 0.25)",
+      "drift_detected": true
+    },
+    "age": {
+      "type": "numeric",
+      "test": "KS + PSI",
+      "ks_statistic": 0.0122,
+      "ks_p_value": 0.8508219458664311,
+      "psi_value": 0.002,
+      "psi_interpretation": "Estável (PSI < 0.10)",
+      "drift_detected": false
+    },
+    "credit_to_duration_ratio": {
+      "type": "numeric",
+      "test": "KS + PSI",
+      "ks_statistic": 0.169,
+      "ks_p_value": 9.75551584484737e-63,
+      "psi_value": 0.1479,
+      "psi_interpretation": "Moderado (0.10 <= PSI < 0.25)",
+      "drift_detected": true
+    },
+    "installment_commitment": {
+      "type": "numeric",
+      "test": "KS + PSI",
+      "ks_statistic": 0.0116,
+      "ks_p_value": 0.8896523693694147,
+      "psi_value": 0.0006,
+      "psi_interpretation": "Estável (PSI < 0.10)",
+      "drift_detected": false
+    },
+    "residence_since": {
+      "type": "numeric",
+      "test": "KS + PSI",
+      "ks_statistic": 0.0094,
+      "ks_p_value": 0.9799982681374148,
+      "psi_value": 0.0008,
+      "psi_interpretation": "Estável (PSI < 0.10)",
+      "drift_detected": false
+    },
+    "existing_credits": {
+      "type": "numeric",
+      "test": "KS + PSI",
+      "ks_statistic": 0.0092,
+      "ks_p_value": 0.9840130736022987,
+      "psi_value": 0.0004,
+      "psi_interpretation": "Estável (PSI < 0.10)",
+      "drift_detected": false
+    },
+    "num_dependents": {
+      "type": "numeric",
+      "test": "KS + PSI",
+      "ks_statistic": 0.0008,
+      "ks_p_value": 1.0,
+      "psi_value": 0.0,
+      "psi_interpretation": "Estável (PSI < 0.10)",
+      "drift_detected": false
+    },
+    "installment_rate_burden": {
+      "type": "numeric",
+      "test": "KS + PSI",
+      "ks_statistic": 0.2014,
+      "ks_p_value": 4.222051858506764e-89,
+      "psi_value": 0.2025,
+      "psi_interpretation": "Moderado (0.10 <= PSI < 0.25)",
+      "drift_detected": true
+    },
+    "checking_status": {
+      "type": "categorical",
+      "test": "Chi-Square",
+      "chi2_statistic": 867.9709,
+      "p_value": 7.837867022821604e-188,
+      "drift_detected": true
+    },
+    "savings_status": {
+      "type": "categorical",
+      "test": "Chi-Square",
+      "chi2_statistic": 2.2022,
+      "p_value": 0.6986298674669859,
+      "drift_detected": false
+    },
+    "housing": {
+      "type": "categorical",
+      "test": "Chi-Square",
+      "chi2_statistic": 0.1815,
+      "p_value": 0.9132563848203036,
+      "drift_detected": false
+    },
+    "foreign_worker": {
+      "type": "categorical",
+      "test": "Chi-Square",
+      "chi2_statistic": 0.0,
+      "p_value": 1.0,
+      "drift_detected": false
+    },
+    "credit_history": {
+      "type": "categorical",
+      "test": "Chi-Square",
+      "chi2_statistic": 10.832,
+      "p_value": 0.028518750622823708,
+      "drift_detected": true
+    },
+    "purpose": {
+      "type": "categorical",
+      "test": "Chi-Square",
+      "chi2_statistic": 7.7876,
+      "p_value": 0.5556879552368008,
+      "drift_detected": false
+    },
+    "employment": {
+      "type": "categorical",
+      "test": "Chi-Square",
+      "chi2_statistic": 4.5151,
+      "p_value": 0.3407591810409886,
+      "drift_detected": false
+    },
+    "personal_status": {
+      "type": "categorical",
+      "test": "Chi-Square",
+      "chi2_statistic": 0.8579,
+      "p_value": 0.8355649934062033,
+      "drift_detected": false
+    },
+    "property_magnitude": {
+      "type": "categorical",
+      "test": "Chi-Square",
+      "chi2_statistic": 0.4703,
+      "p_value": 0.9253738279685048,
+      "drift_detected": false
+    },
+    "job": {
+      "type": "categorical",
+      "test": "Chi-Square",
+      "chi2_statistic": 0.2018,
+      "p_value": 0.977301402712953,
+      "drift_detected": false
+    }
+  }
+}

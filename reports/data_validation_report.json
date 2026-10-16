@@ -1,0 +1,233 @@
+{
+  "timestamp": "2026-10-15T23:06:04.645756",
+  "projeto": "Tech Challenge 04 - Credit Scoring",
+  "dataset_avaliado": "German Credit Data (Kaggle/UCI)",
+  "lote_referencia": {
+    "dataset_name": "dataset_referencia_limpo",
+    "status": "APROVADO",
+    "timestamp": "2026-10-15T23:06:04.541568",
+    "total_records": 5000,
+    "total_errors": 0,
+    "error_categories": [],
+    "failure_details": []
+  },
+  "lote_corrompido": {
+    "dataset_name": "dataset_lote_com_erros_intencionais",
+    "status": "REJEITADO",
+    "timestamp": "2026-10-15T23:06:04.576334",
+    "total_records": 5000,
+    "total_errors": 31,
+    "error_categories": [
+      "field_uniqueness",
+      "Violação de maioridade legal: age < 18 anos.",
+      "O valor do crédito deve ser estritamente positivo.",
+      "O valor do crédito excede o teto operacional de 50.000.",
+      "not_nullable",
+      "Situação de moradia inválida. Domínios aceitos: ['own', 'rent', 'for free']",
+      "A variável-alvo deve conter unicamente valores binários 0 ou 1."
+    ],
+    "failure_details": [
+      {
+        "schema_context": "Column",
+        "column": "client_id",
+        "check": "field_uniqueness",
+        "check_number": null,
+        "failure_case": 100000,
+        "index": 0
+      },
+      {
+        "schema_context": "Column",
+        "column": "client_id",
+        "check": "field_uniqueness",
+        "check_number": null,
+        "failure_case": 100000,
+        "index": 20
+      },
+      {
+        "schema_context": "Column",
+        "column": "client_id",
+        "check": "field_uniqueness",
+        "check_number": null,
+        "failure_case": 100000,
+        "index": 21
+      },
+      {
+        "schema_context": "Column",
+        "column": "client_id",
+        "check": "field_uniqueness",
+        "check_number": null,
+        "failure_case": 100000,
+        "index": 22
+      },
+      {
+        "schema_context": "Column",
+        "column": "client_id",
+        "check": "field_uniqueness",
+        "check_number": null,
+        "failure_case": 100000,
+        "index": 23
+      },
+      {
+        "schema_context": "Column",
+        "column": "client_id",
+        "check": "field_uniqueness",
+        "check_number": null,
+        "failure_case": 100000,
+        "index": 24
+      },
+      {
+        "schema_context": "Column",
+        "column": "age",
+        "check": "Violação de maioridade legal: age < 18 anos.",
+        "check_number": 0,
+        "failure_case": 15,
+        "index": 0
+      },
+      {
+        "schema_context": "Column",
+        "column": "age",
+        "check": "Violação de maioridade legal: age < 18 anos.",
+        "check_number": 0,
+        "failure_case": 15,
+        "index": 1
+      },
+      {
+        "schema_context": "Column",
+        "column": "age",
+        "check": "Violação de maioridade legal: age < 18 anos.",
+        "check_number": 0,
+        "failure_case": 15,
+        "index": 2
+      },
+      {
+        "schema_context": "Column",
+        "column": "age",
+        "check": "Violação de maioridade legal: age < 18 anos.",
+        "check_number": 0,
+        "failure_case": -5,
+        "index": 3
+      },
+      {
+        "schema_context": "Column",
+        "column": "age",
+        "check": "Violação de maioridade legal: age < 18 anos.",
+        "check_number": 0,
+        "failure_case": -5,
+        "index": 4
+      },
+      {
+        "schema_context": "Column",
+        "column": "credit_amount",
+        "check": "O valor do crédito deve ser estritamente positivo.",
+        "check_number": 0,
+        "failure_case": -2500,
+        "index": 5
+      },
+      {
+        "schema_context": "Column",
+        "column": "credit_amount",
+        "check": "O valor do crédito deve ser estritamente positivo.",
+        "check_number": 0,
+        "failure_case": -2500,
+        "index": 6
+      },
+      {
+        "schema_context": "Column",
+        "column": "credit_amount",
+        "check": "O valor do crédito deve ser estritamente positivo.",
+        "check_number": 0,
+        "failure_case": -2500,
+        "index": 7
+      },
+      {
+        "schema_context": "Column",
+        "column": "credit_amount",
+        "check": "O valor do crédito excede o teto operacional de 50.000.",
+        "check_number": 1,
+        "failure_case": 999999,
+        "index": 8
+      },
+      {
+        "schema_context": "Column",
+        "column": "credit_amount",
+        "check": "O valor do crédito excede o teto operacional de 50.000.",
+        "check_number": 1,
+        "failure_case": 999999,
+        "index": 9
+      },
+      {
+        "schema_context": "Column",
+        "column": "checking_status",
+        "check": "not_nullable",
+        "check_number": null,
+        "failure_case": NaN,
+        "index": 10
+      },
+      {
+        "schema_context": "Column",
+        "column": "checking_status",
+        "check": "not_nullable",
+        "check_number": null,
+        "failure_case": NaN,
+        "index": 11
+      },
+      {
+        "schema_context": "Column",
+        "column": "checking_status",
+        "check": "not_nullable",
+        "check_number": null,
+        "failure_case": NaN,
+        "index": 12
+      },
+      {
+        "schema_context": "Column",
+        "column": "checking_status",
+        "check": "not_nullable",
+        "check_number": null,
+        "failure_case": NaN,
+        "index": 13
+      },
+      {
+        "schema_context": "Column",
+        "column": "checking_status",
+        "check": "not_nullable",
+        "check_number": null,
+        "failure_case": NaN,
+        "index": 14
+      },
+      {
+        "schema_context": "Column",
+        "column": "housing",
+        "check": "Situação de moradia inválida. Domínios aceitos: ['own', 'rent', 'for free']",
+        "check_number": 0,
+        "failure_case": "spaceship_station",
+        "index": 15
+      },
+      {
+        "schema_context": "Column",
+        "column": "housing",
+        "check": "Situação de moradia inválida. Domínios aceitos: ['own', 'rent', 'for free']",
+        "check_number": 0,
+        "failure_case": "spaceship_station",
+        "index": 16
+      },
+      {
+        "schema_context": "Column",
+        "column": "housing",
+        "check": "Situação de moradia inválida. Domínios aceitos: ['own', 'rent', 'for free']",
+        "check_number": 0,
+        "failure_case": "spaceship_station",
+        "index": 17
+      },
+      {
+        "schema_context": "Column",
+        "column": "housing",
+        "check": "Situação de moradia inválida. Domínios aceitos: ['own', 'rent', 'for free']",
+        "check_number": 0,
+        "failure_case": "spaceship_station",
+        "index": 18
+      }
+    ]
+  },
+  "conclusao": "Contrato operando em conformidade estrita: dados limpos foram aprovados e lote corrompido foi integralmente interceptado e bloqueado."
+}
