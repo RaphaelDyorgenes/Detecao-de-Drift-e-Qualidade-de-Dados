@@ -1,0 +1,59 @@
+{
+    "timestamp": "2026-11-03T17:28:42.251177+00:00",
+    "pipeline_version": "1.0.0",
+    "stages": {
+        "etapa_0_data_preparation": {
+            "status": "SUCCESS",
+            "reference_records": 5000
+        },
+        "etapa_1_data_contracts": {
+            "status": "FAILED",
+            "intercepted_anomalies": 0
+        },
+        "etapa_1_model_training": {
+            "status": "SUCCESS",
+            "auc_roc": 0.0
+        },
+        "etapa_2_drift_detection": {
+            "status": "SUCCESS",
+            "drift_detected": false,
+            "drifted_count": 0
+        },
+        "etapa_3_observability": {
+            "status": "SUCCESS"
+        }
+    },
+    "model_performance": {
+        "auc_roc": 0.0,
+        "accuracy": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1_score": 0.0,
+        "training_duration_seconds": 0.0,
+        "algorithm": "XGBoost"
+    },
+    "data_validation": {
+        "clean_batch_status": "UNKNOWN",
+        "corrupted_batch_status": "UNKNOWN",
+        "corrupted_batch_violations_count": 0,
+        "quality_gate_passed": false
+    },
+    "drift_summary": {
+        "total_features_tested": 0,
+        "drift_detected_count": 0,
+        "drift_rate_percentage": 0.0,
+        "drifted_features": [],
+        "detailed_tests": []
+    },
+    "infrastructure": {
+        "cpu_percent": 25.7,
+        "process_memory_rss_mb": 29.48,
+        "system_memory_percent": 54.4,
+        "system_memory_available_mb": 7422.76,
+        "python_version": "3.13.14",
+        "platform": "win32"
+    },
+    "timing": {
+        "observability_duration_seconds": 3.3337
+    }
+}
