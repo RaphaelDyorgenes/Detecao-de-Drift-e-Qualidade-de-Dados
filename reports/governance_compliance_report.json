@@ -1,0 +1,133 @@
+{
+    "timestamp": "2026-11-03T17:34:36.462321+00:00",
+    "regulatory_framework": {
+        "primary_law": "LGPD — Lei Federal nº 13.709/2018",
+        "sector_regulation": "Resoluções BACEN / CMN nº 4.658 e 4.893 (Segurança Cibernética e Nuvem)",
+        "consumer_code": "Código de Defesa do Consumidor (Lei 8.078/1990 — Art. 43: Cadastro Positivo e Transparência)"
+    },
+    "legal_bases": {
+        "primary": {
+            "article": "Art. 7º, Inciso X da LGPD",
+            "definition": "Proteção do Crédito",
+            "justification": "Permite o tratamento e pontuação de crédito para avaliação de capacidade de pagamento e contenção de inadimplência sistêmica."
+        },
+        "secondary": {
+            "article": "Art. 7º, Inciso V da LGPD",
+            "definition": "Execução de Contrato ou Procedimentos Preliminares",
+            "justification": "Processamento de propostas de empréstimo solicitadas diretamente pelo titular."
+        }
+    },
+    "automated_decision_safeguards": {
+        "lgpd_article_20": "Garantia de Revisão Humana de Decisões Automatizadas",
+        "mechanisms": [
+            "Explicabilidade Local (SHAP / Feature Importance) fornecida ao titular mediante solicitação.",
+            "Canal formal com DPO / Encarregado para contestação e reanálise por analista humano de risco.",
+            "Proibição de recusa sumária com base em atributos discriminatórios vedados."
+        ]
+    },
+    "pii_and_minimization": {
+        "reference_dataset": {
+            "pii_leakage_detected": false,
+            "detected_pii_columns": [],
+            "surrogate_key_used": true,
+            "privacy_by_design_compliance": true,
+            "status": "CONFORME"
+        },
+        "production_dataset": {
+            "pii_leakage_detected": false,
+            "detected_pii_columns": [],
+            "surrogate_key_used": true,
+            "privacy_by_design_compliance": true,
+            "status": "CONFORME"
+        },
+        "minimization_statement": "Apenas variáveis financeiras e contratuais estritamente indispensáveis ao cálculo atuarial de risco foram coletadas."
+    },
+    "fairness_and_bias_mitigation": {
+        "methodology": "Disparate Impact Ratio (Regra dos 80% do EEOC/NIST)",
+        "reference_cohort_results": {
+            "foreign_worker_analysis": {
+                "approval_rates": {
+                    "no": 0.87,
+                    "yes": 0.6854
+                },
+                "disparate_impact_ratio": 0.7878,
+                "passes_four_fifths_rule": false,
+                "status": "ALERTA_DE_VIES"
+            },
+            "age_cohort_analysis": {
+                "approval_rates": {
+                    "Jovens (<25)": 0.5662,
+                    "Adultos (25-55)": 0.721,
+                    "Seniores (>55)": 0.7297
+                },
+                "disparate_impact_ratio_young_vs_adult": 0.7853,
+                "passes_four_fifths_rule": false,
+                "status": "ATENÇÃO_RISCO_NATURAL"
+            },
+            "housing_analysis": {
+                "approval_rates": {
+                    "for free": 0.5939,
+                    "own": 0.724,
+                    "rent": 0.6278
+                },
+                "status": "MONITORADO"
+            }
+        },
+        "production_cohort_results": {
+            "foreign_worker_analysis": {
+                "approval_rates": {
+                    "no": 0.78,
+                    "yes": 0.5871
+                },
+                "disparate_impact_ratio": 0.7527,
+                "passes_four_fifths_rule": false,
+                "status": "ALERTA_DE_VIES"
+            },
+            "age_cohort_analysis": {
+                "approval_rates": {
+                    "Jovens (<25)": 0.5109,
+                    "Adultos (25-55)": 0.6103,
+                    "Seniores (>55)": 0.6637
+                },
+                "disparate_impact_ratio_young_vs_adult": 0.8372,
+                "passes_four_fifths_rule": true,
+                "status": "EQUITATIVO"
+            },
+            "housing_analysis": {
+                "approval_rates": {
+                    "for free": 0.4455,
+                    "own": 0.6348,
+                    "rent": 0.5271
+                },
+                "status": "MONITORADO"
+            }
+        },
+        "bias_mitigation_actions": [
+            "Remoção de variáveis protegidas sensíveis (origem racial, orientação religiosa, filiação sindical).",
+            "Monitoramento contínuo de disparate impact entre faixas etárias e trabalhadores estrangeiros.",
+            "Calibração de threshold diferencial para garantia de paridade de taxa de aprovação quando aplicável."
+        ]
+    },
+    "data_retention_and_purge": {
+        "operational_logs_retention_days": 180,
+        "inference_records_retention_years": 5,
+        "legal_basis_for_retention": "Prazo prescricional para guarda de registros cadastrais e ações de cobrança (Art. 206 do Código Civil e Art. 27 do CDC).",
+        "purge_mechanism": "Exclusão lógica imediata mediante solicitação válida (Art. 18 LGPD) e descarte físico seguro com sobrescrita criptográfica ao término do prazo regulatório."
+    },
+    "causal_analysis_summary": {
+        "root_cause": "Choque macroeconômico exógeno (inflação acumulada e aperto monetário)",
+        "causal_chain": [
+            "1. Redução do poder aquisitivo real das famílias.",
+            "2. Aumento do valor nominal solicitado nos empréstimos (credit_amount sobe +44.8%).",
+            "3. Alongamento do prazo de pagamento para acomodar parcelas (duration sobe +62.4%).",
+            "4. Deterioração rápida dos saldos em conta corrente (checking_status '<0' sobe de 28.9% para 56.8%).",
+            "5. Quebra da correlação histórica entre garantias e adimplência (Concept Drift: default sobe de 30% para 40.5%).",
+            "6. Subestimação silenciosa de risco pelo modelo XGBoost treinado em condições de calmaria."
+        ],
+        "prescriptive_actions": [
+            "Retreinamento adaptativo com ponderação temporal (exponential decaying weights).",
+            "Recalibração imediata do limiar de corte de probabilidade (threshold shifting de 0.50 para 0.42).",
+            "Implementação de travas duras de política de crédito (quality gates) para tomadores com saldo negativo e prazos > 36 meses."
+        ]
+    }
+}
