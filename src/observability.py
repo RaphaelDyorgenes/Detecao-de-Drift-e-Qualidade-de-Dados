@@ -120,7 +120,7 @@ def collect_pipeline_telemetry() -> Dict[str, Any]:
         try:
             with open(model_eval_path, "r", encoding="utf-8") as f:
                 model_data = json.load(f)
-            test_metrics = model_data.get("test_metrics", {})
+            test_metrics = model_data.get("metrics") or model_data.get("test_metrics", {})
             telemetry["model_performance"] = {
                 "auc_roc": test_metrics.get("auc_roc", 0.0),
                 "accuracy": test_metrics.get("accuracy", 0.0),

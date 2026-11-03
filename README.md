@@ -8,6 +8,7 @@
 [![MLOps](https://img.shields.io/badge/Tracking-MLflow-0194E2.svg)](https://mlflow.org/)
 [![Metrics](https://img.shields.io/badge/Metrics-Prometheus-E6522C.svg)](https://prometheus.io/)
 [![Compliance](https://img.shields.io/badge/LGPD-Compliant-success.svg)](#46-etapa-4--governança-de-dados-conformidade-lgpd-e-mitigação-de-vieses)
+[![CI Pipeline](https://github.com/RaphaelDyorgenes/Detecao-de-Drift-e-Qualidade-de-Dados/actions/workflows/pipeline-ci.yml/badge.svg)](https://github.com/RaphaelDyorgenes/Detecao-de-Drift-e-Qualidade-de-Dados/actions)
 
 ---
 
@@ -382,6 +383,17 @@ Start-Process "reports/pipeline_monitoring_dashboard.html"
 
 # Relatório de Distribuição e Drift do Evidently AI (Etapa 2)
 Start-Process "reports/data_drift_report.html"
+```
+
+---
+
+### 8.4. Execução da Suite de Testes Automatizados (Pytest)
+
+O projeto possui cobertura de testes unitários e de integração cobrindo contratos Pandera (aprovação e bloqueio de dados anômalos), inferência do modelo XGBoost, detecção de drift estatístico (KS/PSI), telemetria de observabilidade e conformidade LGPD:
+
+```bash
+# Execução da bateria completa de testes
+python -m pytest tests/test_pipeline.py -v
 ```
 
 ---
