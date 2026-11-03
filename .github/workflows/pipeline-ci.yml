@@ -1,0 +1,45 @@
+name: Pipeline CI/CD & Automated Verification
+
+on:
+  push:
+    branches: [ "main", "feat/**", "ci/**", "fix/**" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test-and-verify:
+    name: Testes e Validação de Pipeline
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do Repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Ambiente Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Instalação de Dependências
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Execução Integrada do Pipeline Completo (Etapas 0 a 4)
+        run: |
+          python main.py
+
+      - name: Execução da Suite de Testes Automatizados (Pytest)
+        run: |
+          python -m pytest tests/test_pipeline.py -v
+
+      - name: Publicar Relatórios e Artefatos de Observabilidade
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: observabilidade-relatorios-tc04
+          path: |
+            reports/
+            models/
+          retention-days: 14
