@@ -46,6 +46,15 @@ import pandas as pd
 from scipy import stats
 
 # Evidently AI (versão 0.7+)
+# Compatibilidade defensiva para Evidently AI com versões do Pandas
+try:
+    import pandas.core.dtypes.common as _pd_common
+    if not hasattr(_pd_common, "infer_dtype_from_object"):
+        from pandas._libs.lib import infer_dtype
+        _pd_common.infer_dtype_from_object = infer_dtype
+except Exception:
+    pass
+
 from evidently import Report
 from evidently.presets import DataDriftPreset
 

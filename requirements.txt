@@ -7,9 +7,9 @@ scikit-learn>=1.5.0
 xgboost>=2.0.0
 joblib>=1.4.0
 
-# Manipulação e Estatística
-pandas>=2.2.0
-numpy>=1.26.0
+# Manipulação e Estatística (pandas 2.x compatível com Evidently AI)
+pandas>=2.2.0,<3.0.0
+numpy>=1.26.0,<3.0.0
 scipy>=1.11.0
 
 # Validação e Qualidade de Dados (Data Contracts)
