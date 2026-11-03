@@ -9,12 +9,14 @@ das etapas do projeto de Observabilidade, Detecção de Drift e Governança:
     - Etapa 0: Ingestão, tratamento e preparação do German Credit Data.
     - Etapa 1: Validação de Contratos de Dados (Pandera) e Treino do Classificador Base (XGBoost).
     - Etapa 2: Simulação de Degradação Econômica (Data/Concept Drift) e Observabilidade (Evidently AI).
+    - Etapa 3: Observabilidade de Pipelines, MLflow Tracking e Métricas de Infraestrutura.
 
 Uso:
-    python main.py              -> Executa o ciclo completo (Etapas 0, 1 e 2)
+    python main.py              -> Executa o ciclo completo (Etapas 0 a 3)
     python main.py --etapa 0    -> Executa apenas ingestão e preparação
     python main.py --etapa 1    -> Executa validação de contratos e modelo base
     python main.py --etapa 2    -> Executa simulação de drift e relatórios Evidently
+    python main.py --etapa 3    -> Executa observabilidade, MLflow e dashboard
 =============================================================================
 """
 
@@ -51,6 +53,12 @@ def run_etapa_2() -> None:
     drift_main()
 
 
+def run_etapa_3() -> None:
+    """Executa a Etapa 3: Observabilidade de Pipelines, MLflow e Métricas."""
+    from src.observability import main as obs_main
+    obs_main()
+
+
 def main() -> None:
     """
     Ponto de entrada do orquestrador do projeto.
@@ -64,9 +72,9 @@ def main() -> None:
     parser.add_argument(
         "--etapa",
         type=int,
-        choices=[0, 1, 2],
+        choices=[0, 1, 2, 3],
         default=None,
-        help="Número da etapa específica a executar (0, 1 ou 2). Se omitido, executa o ciclo completo.",
+        help="Número da etapa específica a executar (0, 1, 2 ou 3). Se omitido, executa o ciclo completo.",
     )
     args = parser.parse_args()
 
@@ -77,10 +85,11 @@ def main() -> None:
     print("=" * 76)
 
     if args.etapa is None:
-        print("\n>>> Executando pipeline completo (Etapas 0, 1 e 2)...")
+        print("\n>>> Executando pipeline completo (Etapas 0, 1, 2 e 3)...")
         run_etapa_0()
         run_etapa_1()
         run_etapa_2()
+        run_etapa_3()
     elif args.etapa == 0:
         print("\n>>> Executando especificamente a Etapa 0 (Preparação)...")
         run_etapa_0()
@@ -90,6 +99,9 @@ def main() -> None:
     elif args.etapa == 2:
         print("\n>>> Executando especificamente a Etapa 2 (Drift e Evidently AI)...")
         run_etapa_2()
+    elif args.etapa == 3:
+        print("\n>>> Executando especificamente a Etapa 3 (Observabilidade e MLflow)...")
+        run_etapa_3()
 
     print("\n" + "=" * 76)
     print("  STATUS FINAL: Ciclo de execução finalizado com sucesso!")

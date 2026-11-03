@@ -17,3 +17,8 @@ pandera>=0.20.0
 
 # Detecção de Drift e Relatórios de Observabilidade
 evidently>=0.7.0
+
+# Observabilidade, Métricas e Rastreamento de Modelos (Etapa 3)
+mlflow>=2.10.0
+prometheus-client>=0.19.0
+psutil>=5.9.0

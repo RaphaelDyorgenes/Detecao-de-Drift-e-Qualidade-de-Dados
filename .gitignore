@@ -11,6 +11,13 @@ __pycache__/
 *.py[cod]
 *$py.class
 .cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# MLflow local runs (metadados brutos locais)
+mlruns/
+.trash/
 
 # Jupyter Notebooks - checkpoints
 .ipynb_checkpoints/

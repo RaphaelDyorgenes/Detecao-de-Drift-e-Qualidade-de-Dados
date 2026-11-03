@@ -1,0 +1,35 @@
+# HELP pipeline_task_status Status de execucao das etapas (1 = Sucesso, 0 = Falha)
+# TYPE pipeline_task_status gauge
+pipeline_task_status{stage="etapa_0_data_preparation"} 1
+pipeline_task_status{stage="etapa_1_data_contracts"} 0
+pipeline_task_status{stage="etapa_1_model_training"} 1
+pipeline_task_status{stage="etapa_2_drift_detection"} 1
+pipeline_task_status{stage="etapa_3_observability"} 1
+
+# HELP model_auc_roc Area sob a Curva ROC do classificador baseline
+# TYPE model_auc_roc gauge
+model_auc_roc 0.0
+
+# HELP model_f1_score F1-Score do classificador baseline
+# TYPE model_f1_score gauge
+model_f1_score 0.0
+
+# HELP data_validation_violations_total Total de violacoes de contrato interceptadas
+# TYPE data_validation_violations_total counter
+data_validation_violations_total 0
+
+# HELP drift_detected_features_total Numero de features com drift estatistico confirmado
+# TYPE drift_detected_features_total gauge
+drift_detected_features_total 0
+
+# HELP drift_rate_percentage Percentual de features com drift detectado
+# TYPE drift_rate_percentage gauge
+drift_rate_percentage 0.0
+
+# HELP process_cpu_usage_percent Percentual de CPU utilizado pelo processo
+# TYPE process_cpu_usage_percent gauge
+process_cpu_usage_percent 25.7
+
+# HELP process_memory_rss_bytes Memoria residente (RSS) utilizada pelo processo
+# TYPE process_memory_rss_bytes gauge
+process_memory_rss_bytes 30912020
