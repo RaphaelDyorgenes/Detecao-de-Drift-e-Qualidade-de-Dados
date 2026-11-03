@@ -1,10 +1,22 @@
 # Tech Challenge 04 — Observabilidade Contínua, Detecção de Drift, Qualidade de Dados e Governança
 
-[![Python Version](https://img.shields.io/badge/python-3.11%20%7C%203.12-blue.svg)](https://www.python.org/)
+[![Python Version](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Framework](https://img.shields.io/badge/ML-XGBoost%20%7C%20Scikit--Learn-orange.svg)](https://xgboost.readthedocs.io/)
 [![Quality Gate](https://img.shields.io/badge/Contracts-Pandera-yellow.svg)](https://pandera.readthedocs.io/)
 [![Observability](https://img.shields.io/badge/Monitoring-Evidently%20AI-red.svg)](https://www.evidentlyai.com/)
+[![MLOps](https://img.shields.io/badge/Tracking-MLflow-0194E2.svg)](https://mlflow.org/)
+[![Metrics](https://img.shields.io/badge/Metrics-Prometheus-E6522C.svg)](https://prometheus.io/)
+[![Compliance](https://img.shields.io/badge/LGPD-Compliant-success.svg)](#46-etapa-4--governança-de-dados-conformidade-lgpd-e-mitigação-de-vieses)
+
+---
+
+## 📹 Vídeo de Demonstração (Método STAR — ≤ 5 minutos)
+
+> [!IMPORTANT]
+> **Link do Vídeo de Demonstração:** [Clique aqui para assistir à apresentação completa no YouTube / Loom](https://youtu.be/placeholder-tech-challenge-04) *(insira o link da gravação aqui)*
+>
+> O vídeo sintetiza o problema da degradação silenciosa, os quality gates implementados, a auditoria de drift, os painéis de observabilidade e a conformidade regulatória. O [roteiro detalhado com marcações de tempo](#6-roteiro-de-apresentação-em-vídeo--método-star--5-minutos) está documentado na Seção 6.
 
 ---
 
@@ -17,7 +29,7 @@ Entretanto, alterações nas condições macroeconômicas (tais como choques inf
 - **Concept Drift:** A relação estocástica condicional $P(Y \mid X)$ entre as variáveis explicativas e o evento de inadimplência se modifica ao longo do tempo.
 - **Deterioração Cadastral:** Lotes de ingestão com inconsistências, campos nulos ou categorias corrompidas ingressam inadvertidamente no pipeline.
 
-O presente projeto estabelece a camada de **Sustentação, Observabilidade e Confiabilidade** de um sistema de Credit Scoring, cobrindo da ingestão à detecção formal de drift (Etapas 1 e 2 do Tech Challenge), em estrita conformidade com os requisitos de qualidade de software, rigor estatístico e governança de dados.
+O presente projeto estabelece a camada completa de **Sustentação, Observabilidade, Confiabilidade e Governança** de um sistema de Credit Scoring, cobrindo integralmente as 4 Etapas do Tech Challenge, em estrita conformidade com os requisitos de qualidade de software, rigor estatístico e governança de dados (LGPD).
 
 ---
 
@@ -52,8 +64,6 @@ A partir do dataset canônico de 1.000 observações da UCI, geram-se partiçõe
 - **Dataset de Produção Inicial (`data/production/production_data_clean.csv`):** 5.000 registros representando o período de operação estável.
 - **Dataset de Produção com Drift (`data/production/production_drifted.csv`):** 5.000 registros submetidos a choque macroeconômico simulado.
 
-Essa metodologia preserva rigorosamente a estrutura original do German Credit Data e cumpre a recomendação volumétrica de ao menos 5.000 amostras, garantindo poder estatístico nos testes de hipótese.
-
 ---
 
 ## 3. Arquitetura da Solução
@@ -82,6 +92,19 @@ flowchart TD
         L --> M["Bateria Estatística\n(KS, PSI e Qui-Quadrado)"]
         L --> N["Evidently AI Report\n(data_drift_report.html)"]
     end
+
+    subgraph ETAPA_3 ["Etapa 3: Observabilidade Contínua"]
+        M & N & I --> O["observability.py\n(Telemetria e Métricas)"]
+        O --> P["MLflow Tracking\n(mlruns / Experimentos)"]
+        O --> Q["Prometheus Exporter\n(prometheus_metrics.prom)"]
+        O --> R["Dashboard Interativo\n(pipeline_monitoring_dashboard.html)"]
+    end
+
+    subgraph ETAPA_4 ["Etapa 4: Governança e Compliance"]
+        C & K --> S["governance.py\n(Auditoria de LGPD e Vieses)"]
+        S --> T["Relatório de Compliance\n(governance_compliance_report.json)"]
+        S --> U["Análise Causal & STAR Video"]
+    end
 ```
 
 ---
@@ -106,6 +129,8 @@ Para impedir a contaminação do pipeline preditivo por registros espúrios, imp
 O script `src/data_validation.py` submete ao contrato dois lotes distintos:
 - **Lote Íntegro:** O Dataset de Referência é validado com sucesso (**Status: APROVADO**; 0 falhas).
 - **Lote Corrompido:** Injetam-se propositalmente menores de idade (15 anos), valores de crédito negativos (-2500), valores nulos (NaN) em saldo de conta, strings inválidas (`housing = 'spaceship_station'`), alvos ilegais (`target = 9`) e duplicatas de ID. O contrato rejeita formalmente o lote (**Status: REJEITADO**; 31 violações interceptadas), demonstrando o bloqueio da ingestão antes da inferência.
+
+---
 
 ### 4.2. Etapa 1 — Treinamento do Modelo Baseline de Risco de Crédito
 
@@ -148,7 +173,7 @@ O módulo `src/drift_detection.py` aplica testes de hipótese paramétricos e n�
 #### Resultados Obtidos na Auditoria Estatística:
 
 | Variável | Categoria | Teste Primário | Estatística | p-valor | Diagnóstico |
-| :--- | :--- | :--- | :---: | :---: | :--- |
+| :--- | :--- | :--- | :--- | :--- | :--- |
 | `credit_amount` | Numérica | KS + PSI | $D = 0,1720$ | $5,57 \times 10^{-65}$ | **DRIFT DETECTADO** (PSI Severo) |
 | `duration` | Numérica | KS + PSI | $D = 0,5210$ | $0,00 \times 10^{0}$ | **DRIFT DETECTADO** (PSI Crítico) |
 | `credit_to_duration_ratio` | Numérica | KS + PSI | $D = 0,1690$ | $9,76 \times 10^{-63}$ | **DRIFT DETECTADO** |
@@ -159,30 +184,137 @@ O módulo `src/drift_detection.py` aplica testes de hipótese paramétricos e n�
 | `housing` | Categórica | Qui-Quadrado | $\chi^2 = 0,18$ | $0,9133$ | **ESTÁVEL** |
 | `foreign_worker` | Categórica | Qui-Quadrado | $\chi^2 = 0,00$ | $1,0000$ | **ESTÁVEL** |
 
-#### Relatório Visual do Evidently AI:
-O relatório interativo completo é exportado em formato HTML autossuficiente em `reports/data_drift_report.html`, apresentando:
-- Indicador global de Data Drift do conjunto de features;
-- Histogramas de densidade comparativos entre o Dataset de Referência e o Dataset de Produção;
-- Estatísticas descritivas (média, desvio padrão, percentis e p-valores);
-- Resumo executivo em formato legível por máquina (`reports/data_drift_summary.json`).
+---
+
+### 4.5. Etapa 3 — Observabilidade de Pipelines, Infraestrutura e Modelos
+
+Implementada no módulo `src/observability.py`, esta etapa estabelece uma malha de telemetria contínua que unifica os logs de execução, métricas operacionais e a saúde da infraestrutura:
+
+1. **Centralização de Logs e Telemetria Operacional:**
+   - Monitoramento do status de término de cada fase (`SUCCESS`, `FAILED`).
+   - Latência e tempo de resposta de inferência e validação.
+   - Contabilização contínua de violações de dados bloqueadas e proporção de drift ($6 / 19 = 31,58\%$).
+   - Telemetria de consumo de hardware: Uso de memória RAM residente (RSS em MB), percentual de memória total do sistema e percentual de ocupação de CPU via `psutil`.
+
+2. **Rastreamento e Governança com MLflow:**
+   - Registro automatizado de execuções no experimento `TechChallenge04_CreditObservability`.
+   - Armazenamento de metadados, hiperparâmetros e métricas de desempenho (`model_auc_roc`, `model_accuracy`, `model_f1_score`).
+   - Catalogação de artefatos críticos (`credit_scoring_model.joblib`, `data_validation_report.json`, `data_drift_report.html`, `statistical_drift_tests.json`).
+
+3. **Exportador de Métricas OpenMetrics / Prometheus:**
+   - Geração do arquivo padronizado `reports/prometheus_metrics.prom`, contendo métricas tipadas (`gauge`, `counter`) prontas para ingestão em stacks Prometheus/Grafana ou Datadog.
+
+4. **Dashboard Executivo Interativo HTML (`reports/pipeline_monitoring_dashboard.html`):**
+   - Interface web moderna, responsiva e independente de servidor.
+   - Apresenta KPIs executivos, status dos quality gates, fluxo visual da esteira e matriz completa de drift estatístico.
 
 ---
 
-## 5. Estrutura do Repositório
+### 4.6. Etapa 4 — Governança de Dados, Conformidade LGPD e Mitigação de Vieses
+
+Implementada em `src/governance.py` e auditada em `reports/governance_compliance_report.json`, a governança estabelece as salvaguardas éticas e legais:
+
+#### Princípios de Privacy by Design e Privacy by Default:
+- **Minimização de Dados (Art. 6º, III da LGPD):** Coleta e processamento restritos aos atributos estritamente relevantes para a análise atuarial de solvência. Não são coletados nem armazenados dados como religião, posicionamento político, biometria ou dados médicos.
+- **Inexistência de PII Direta:** Auditoria automatizada confirma a ausência de dados cadastrais diretos (`nome`, `cpf`, `rg`, `endereço`, `e-mail`).
+- **Pseudonimização Estruturada:** O cliente é referenciado unicamente por um identificador sintético opaco (`client_id` $\ge 100000$), impossibilitando a reidentificação direta nas tabelas de modelagem.
+
+#### Enquadramento nas Bases Legais da LGPD (Lei 13.709/2018):
+- **Base Legal Primária — Art. 7º, Inciso X (Proteção do Crédito):** Fundamenta juridicamente a construção de modelos de scoring e a análise de probabilidade de inadimplência, salvaguardando a estabilidade do sistema financeiro.
+- **Base Legal Secundária — Art. 7º, Inciso V (Execução de Contrato):** Aplicável nas etapas em que o titular solicita ativamente a concessão de empréstimo ou financiamento.
+
+#### Salvaguardas do Artigo 20 da LGPD (Decisões Unicamente Automatizadas):
+- O titular possui direito à **revisão humana** de decisões automatizadas de recusa de crédito.
+- O pipeline garante explicabilidade dos fatores determinantes do escore (ex.: alto comprometimento de renda ou saldo devedor prolongado), viabilizando comunicação clara e transparente ao proponente.
+
+#### Mitigação de Vieses Algorítmicos (Fairness Analysis):
+- Aplicação do teste de impacto desproporcional (*Disparate Impact Ratio* — Regra dos 80% do EEOC):
+  - **Trabalhadores Estrangeiros (`foreign_worker`):** A taxa de concessão entre trabalhadores estrangeiros e nacionais foi monitorada, atingindo razão compatível e auditada.
+  - **Coortes de Idade:** Avaliação contínua entre proponentes jovens ($< 25$ anos) e adultos ($25$ a $55$ anos), garantindo que distinções de taxa de aprovação decorram exclusivamente do histórico de crédito e renda, sem discriminação ilícita ou abusiva.
+
+#### Política de Retenção e Descarte Seguro de Dados:
+- **Logs Operacionais e Telemetria:** Retenção por 180 dias para suporte a auditorias e depuração técnica.
+- **Registros de Propostas e Escores:** Custódia mantida por 5 anos, em estrita conformidade com o prazo prescricional para cobrança e ações consumeristas (Art. 206 do Código Civil e Art. 27 do CDC), bem como regulamentação do Banco Central (Resolução CMN nº 4.658/4.893).
+- **Descarte Seguro:** Exclusão lógica sob requisição de direitos do titular (Art. 18 da LGPD) e destruição criptográfica dos dados expirados.
+
+---
+
+## 5. Análise Causal da Degradação Econômica e Prescrição
+
+### 5.1. Grafo Causal da Degradação (Causal DAG)
+
+A perda de acurácia do modelo não decorre de falha algorítmica intrínseca, mas de uma cadeia causal de causalidade macroeconômica:
+
+```mermaid
+flowchart TD
+    Macro["Choque Macroeconômico\n(Inflação em alta + Elevação de Juros)"]
+    Renda["Perda do Poder Aquisitivo Real\ne Redução da Renda Disponível"]
+    Montante["Aumento do Montante Solicitado\n(credit_amount +44.8%)"]
+    Prazo["Alongamento do Prazo Contratual\n(duration +62.4%)"]
+    Conta["Deterioração de Reservas Bancárias\n(checking_status &lt; 0 sobe para 56.8%)"]
+    Concept["Concept Drift: Quebra da Relação P(Y|X)\n(Default Real sobe de 30% para 40.5%)"]
+    XGBoost["Subestimação de Risco pelo XGBoost\n(Elevação de Falsos Negativos)"]
+    Prejuizo["Degradação Silenciosa e Prejuízo Financeiro\n(Inadimplência não provisionada)"]
+
+    Macro --> Renda
+    Renda --> Montante
+    Renda --> Prazo
+    Renda --> Conta
+    Montante & Prazo & Conta --> Concept
+    Concept --> XGBoost
+    XGBoost --> Prejuizo
+```
+
+### 5.2. Diagnóstico Técnico: Covariate Shift vs. Concept Drift
+
+1. **Covariate Shift ($P(X)$ alterado):**
+   - Comprovado pelos testes estatísticos de Kolmogorov-Smirnov e PSI severos nas variáveis `credit_amount` ($D = 0,1720, p < 10^{-60}$) e `duration` ($D = 0,5210, p = 0$). O perfil dos tomadores que chegam à fintech mudou expressivamente.
+2. **Concept Drift ($P(Y \mid X)$ alterado):**
+   - No período de referência, um cliente com empréstimo moderado apresentava probabilidade de inadimplência de 30%. No novo cenário econômico de juros elevados, tomadores com o mesmo perfil financeiro passaram a inadimplir com taxa de 40,5%.
+   - Como o classificador XGBoost foi calibrado sob o regime macroeconômico anterior, ele continuou emitindo escores otimistas, provocando uma **degradação silenciosa** com acúmulo de perdas financeiras.
+
+### 5.3. Ações Prescritivas e Plano de Contenção
+
+| Nível de Ação | Medida Prescritiva | Descrição Operacional | Prazo de Resposta |
+| :--- | :--- | :--- | :--- |
+| **Imediato (D0)** | *Dynamic Threshold Shifting* | Reduzir o limiar de decisão de risco de $0,50$ para $0,42$, tornando a concessão mais conservadora para conter o fluxo de perdas imediatas. | $< 2$ horas |
+| **Curto Prazo (D+1)** | Quality Gate de Política Rígida | Bloquear temporariamente solicitações com prazo $> 36$ meses combinadas a clientes com `checking_status < 0` até reavaliação. | $< 24$ horas |
+| **Médio Prazo (D+7)** | Retreinamento Adaptativo Ponderado | Re-treinar o modelo com base móvel (*sliding window*) de 90 dias com decaimento exponencial de pesos para observações históricas antigas. | $< 7$ dias |
+| **Contínuo** | Monitoramento de PSI com Gatilho Automático | Disparar alertas P1 e reavaliação automática sempre que o PSI consolidado ultrapassar $0,25$. | Contínuo (Real-Time) |
+
+---
+
+## 6. Roteiro de Apresentação em Vídeo — Método STAR (≤ 5 minutos)
+
+> [!TIP]
+> Utilize o roteiro estruturado abaixo para a gravação do vídeo obrigatório do Tech Challenge (limite máximo de 5 minutos).
+
+| Tempo | Etapa STAR | Foco Técnico e Narrativo | Tela / Artefato a Exibir no Vídeo |
+| :---: | :---: | :--- | :--- |
+| **00:00 - 01:00** | **Situation** | Contextualização do problema de Credit Scoring em fintechs de crédito sob choques econômicos e o perigo da degradação silenciosa. | Slide de abertura + `README.md` (Seção 1: Contexto e Causalidade). |
+| **01:00 - 02:00** | **Task** | Requisitos técnicos da fase: interceptar dados corrompidos (contratos), diagnosticar deriva de distribuição, telemetria contínua e compliance LGPD. | Terminal com o comando `python main.py` e estrutura de módulos. |
+| **02:00 - 03:45** | **Action** | Demonstração do Pandera barrando anomalias na entrada; treinamento do XGBoost (AUC 0.978); simulação de choque de drift; auditoria Evidently AI e testes KS/PSI; rastreamento MLflow e governança LGPD. | Execução dos testes, código do `data_validation.py`, `drift_detection.py` e relatório Evidently (`data_drift_report.html`). |
+| **03:45 - 05:00** | **Result** | Exibição do Dashboard de Observabilidade (`pipeline_monitoring_dashboard.html`), métricas Prometheus, lições aprendidas e ações prescritivas de remediação. | Dashboard de Monitoramento no navegador + Considerações Finais. |
+
+---
+
+## 7. Estrutura do Repositório
 
 ```
 Tech Challenge - 04/
-├── main.py                         # Orquestrador executivo de ponta a ponta
+├── main.py                         # Orquestrador executivo integrado (Etapas 0 a 4)
 ├── requirements.txt                # Dependências declaradas do ambiente
 ├── .gitignore                      # Regras de exclusão do controle de versão
-├── README.md                       # Documentação técnica e de governança
+├── README.md                       # Documentação técnica, causal, LGPD e STAR
 │
 ├── src/                            # Módulos de engenharia e modelagem
 │   ├── __init__.py                 # Pacote Python
 │   ├── data_preparation.py         # Etapa 0: Ingestão e partição de coortes
 │   ├── data_validation.py          # Etapa 1: Data Contracts formais (Pandera)
 │   ├── model_training.py           # Etapa 1: Treino e avaliação (XGBoost)
-│   └── drift_detection.py          # Etapa 2: Simulação, KS/PSI e Evidently AI
+│   ├── drift_detection.py          # Etapa 2: Simulação, KS/PSI e Evidently AI
+│   ├── observability.py            # Etapa 3: MLflow, Prometheus e Dashboard
+│   └── governance.py               # Etapa 4: Auditoria LGPD, Vieses e Retenção
 │
 ├── data/                           # Dados estruturados
 │   ├── raw/                        # Base bruta original da UCI (1.000 amostras)
@@ -198,95 +330,65 @@ Tech Challenge - 04/
     ├── baseline_model_evaluation.json
     ├── statistical_drift_tests.json# Matriz de testes estatísticos formais
     ├── data_drift_summary.json     # Sumário JSON emitido pelo Evidently AI
-    └── data_drift_report.html      # Dashboard interativo HTML do Evidently
+    ├── data_drift_report.html      # Relatório interativo HTML do Evidently AI
+    ├── prometheus_metrics.prom     # Exportação de métricas OpenMetrics/Prometheus
+    ├── pipeline_observability_metrics.json # Telemetria de pipelines e infraestrutura
+    ├── pipeline_monitoring_dashboard.html # Dashboard executivo interativo HTML
+    └── governance_compliance_report.json  # Auditoria de LGPD, PII e Fairness
 ```
 
 ---
 
-## 6. Instruções de Reprodução e Execução
+## 8. Instruções de Reprodução e Execução
 
-### 6.1. Configuração do Ambiente Virtual
-
-Recomenda-se a criação de um ambiente virtual isolado com Python 3.11 ou 3.12:
+### 8.1. Configuração do Ambiente Virtual
 
 ```bash
 # Criação do ambiente virtual
 python -m venv .venv
 
-# Ativação do ambiente virtual
-# No Windows (PowerShell):
+# Ativação do ambiente virtual (Windows PowerShell):
 .venv\Scripts\Activate.ps1
-# No Windows (Prompt de Comando / CMD):
-.venv\Scripts\activate.bat
-# No Linux/macOS:
+
+# Ativação do ambiente virtual (Linux/macOS):
 source .venv/bin/activate
 
-# Instalação das dependências do projeto
+# Instalação das dependências
 pip install -r requirements.txt
 ```
 
-### 6.2. Execução via Orquestrador Principal (`main.py`)
-
-O orquestrador `main.py` permite tanto a execução encadeada quanto o acionamento de etapas individuais ou exibição de ajuda:
+### 8.2. Execução via Orquestrador Principal (`main.py`)
 
 ```bash
-# 1. Exibir opções de linha de comando e ajuda
+# 1. Ajuda e opções de execução
 python main.py --help
 
-# 2. Execução do pipeline completo integrado (Etapas 0, 1 e 2)
+# 2. Execução do ciclo completo integrado (Etapas 0, 1, 2, 3 e 4)
 python main.py
 
-# 3. Execução isolada da Etapa 0 (Aquisição e preparação dos dados)
-python main.py --etapa 0
-
-# 4. Execução isolada da Etapa 1 (Validação de contratos Pandera e treino do modelo XGBoost)
-python main.py --etapa 1
-
-# 5. Execução isolada da Etapa 2 (Simulação de drift, testes estatísticos e Evidently AI)
-python main.py --etapa 2
+# 3. Execução modular de etapas isoladas:
+python main.py --etapa 0   # Ingestão e preparação de coortes
+python main.py --etapa 1   # Validação de contratos (Pandera) e treino (XGBoost)
+python main.py --etapa 2   # Simulação de drift, testes KS/PSI e Evidently AI
+python main.py --etapa 3   # Observabilidade, MLflow e Dashboard
+python main.py --etapa 4   # Governança, LGPD e auditoria de equidade
 ```
 
-### 6.3. Execução Modular dos Componentes Individuais (`src/`)
-
-Caso prefira inspecionar ou debugar módulos de forma autônoma:
+### 8.3. Visualização dos Dashboards e Relatórios HTML
 
 ```bash
-# Etapa 0: Aquisição e geração dos lotes sintéticos
-python src/data_preparation.py
-# (Opcional) Customizando volume amostral e semente:
-python src/data_preparation.py --samples 5000 --seed 42
+# Dashboard Executivo de Observabilidade de Pipelines (Etapa 3)
+Start-Process "reports/pipeline_monitoring_dashboard.html"
 
-# Etapa 1.1: Validação de Contratos de Dados (Pandera) e teste de estresse
-python src/data_validation.py
-
-# Etapa 1.2: Treinamento do Modelo Baseline (XGBoost)
-python src/model_training.py
-
-# Etapa 2: Simulação de Drift, Bateria Estatística (KS/PSI/Chi2) e Evidently AI
-python src/drift_detection.py
-```
-
-### 6.4. Visualização do Dashboard Interativo de Drift (HTML)
-
-Após a execução da Etapa 2, o relatório interativo autossuficiente pode ser aberto diretamente no navegador:
-
-```bash
-# No Windows (PowerShell):
+# Relatório de Distribuição e Drift do Evidently AI (Etapa 2)
 Start-Process "reports/data_drift_report.html"
-
-# No Windows (CMD):
-start reports/data_drift_report.html
-
-# No Linux:
-xdg-open reports/data_drift_report.html
-
-# No macOS:
-open reports/data_drift_report.html
 ```
+
+---
 
 ## 👥 Autores
 
-| Nome                                | Função no Projeto                               | GitHub
+| Nome                                | Função no Projeto                               | GitHub |
 | :---------------------------------- | :---------------------------------------------- | :--- |
-| **Mateus de Souza Nascimento**      | Analyst / DevOps / Data Scientist / ML Engineer | [GitHub](https://github.com/MateusSouza74)
-| **Raphael Dyorgenes Vitor**         | Analyst / DevOps / Data Scientist / ML Engineer | [GitHub](https://github.com/RaphaelDyorgenes)
+| **Mateus de Souza Nascimento**      | Analyst / DevOps / Data Scientist / ML Engineer | [GitHub](https://github.com/MateusSouza74) |
+| **Raphael Dyorgenes Vitor**         | Analyst / DevOps / Data Scientist / ML Engineer | [GitHub](https://github.com/RaphaelDyorgenes) |
