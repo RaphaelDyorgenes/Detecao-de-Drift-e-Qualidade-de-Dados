@@ -1,11 +1,11 @@
 {
-  "timestamp": "2026-10-15T23:06:04.645756",
+  "timestamp": "2026-11-03T16:36:45.204703",
   "projeto": "Tech Challenge 04 - Credit Scoring",
   "dataset_avaliado": "German Credit Data (Kaggle/UCI)",
   "lote_referencia": {
     "dataset_name": "dataset_referencia_limpo",
     "status": "APROVADO",
-    "timestamp": "2026-10-15T23:06:04.541568",
+    "timestamp": "2026-11-03T16:36:45.096098",
     "total_records": 5000,
     "total_errors": 0,
     "error_categories": [],
@@ -14,17 +14,17 @@
   "lote_corrompido": {
     "dataset_name": "dataset_lote_com_erros_intencionais",
     "status": "REJEITADO",
-    "timestamp": "2026-10-15T23:06:04.576334",
+    "timestamp": "2026-11-03T16:36:45.146003",
     "total_records": 5000,
     "total_errors": 31,
     "error_categories": [
       "field_uniqueness",
-      "Violação de maioridade legal: age < 18 anos.",
-      "O valor do crédito deve ser estritamente positivo.",
-      "O valor do crédito excede o teto operacional de 50.000.",
       "not_nullable",
+      "A variável-alvo deve conter unicamente valores binários 0 ou 1.",
       "Situação de moradia inválida. Domínios aceitos: ['own', 'rent', 'for free']",
-      "A variável-alvo deve conter unicamente valores binários 0 ou 1."
+      "O valor do crédito excede o teto operacional de 50.000.",
+      "O valor do crédito deve ser estritamente positivo.",
+      "Violação de maioridade legal: age < 18 anos."
     ],
     "failure_details": [
       {
@@ -37,126 +37,6 @@
       },
       {
         "schema_context": "Column",
-        "column": "client_id",
-        "check": "field_uniqueness",
-        "check_number": null,
-        "failure_case": 100000,
-        "index": 20
-      },
-      {
-        "schema_context": "Column",
-        "column": "client_id",
-        "check": "field_uniqueness",
-        "check_number": null,
-        "failure_case": 100000,
-        "index": 21
-      },
-      {
-        "schema_context": "Column",
-        "column": "client_id",
-        "check": "field_uniqueness",
-        "check_number": null,
-        "failure_case": 100000,
-        "index": 22
-      },
-      {
-        "schema_context": "Column",
-        "column": "client_id",
-        "check": "field_uniqueness",
-        "check_number": null,
-        "failure_case": 100000,
-        "index": 23
-      },
-      {
-        "schema_context": "Column",
-        "column": "client_id",
-        "check": "field_uniqueness",
-        "check_number": null,
-        "failure_case": 100000,
-        "index": 24
-      },
-      {
-        "schema_context": "Column",
-        "column": "age",
-        "check": "Violação de maioridade legal: age < 18 anos.",
-        "check_number": 0,
-        "failure_case": 15,
-        "index": 0
-      },
-      {
-        "schema_context": "Column",
-        "column": "age",
-        "check": "Violação de maioridade legal: age < 18 anos.",
-        "check_number": 0,
-        "failure_case": 15,
-        "index": 1
-      },
-      {
-        "schema_context": "Column",
-        "column": "age",
-        "check": "Violação de maioridade legal: age < 18 anos.",
-        "check_number": 0,
-        "failure_case": 15,
-        "index": 2
-      },
-      {
-        "schema_context": "Column",
-        "column": "age",
-        "check": "Violação de maioridade legal: age < 18 anos.",
-        "check_number": 0,
-        "failure_case": -5,
-        "index": 3
-      },
-      {
-        "schema_context": "Column",
-        "column": "age",
-        "check": "Violação de maioridade legal: age < 18 anos.",
-        "check_number": 0,
-        "failure_case": -5,
-        "index": 4
-      },
-      {
-        "schema_context": "Column",
-        "column": "credit_amount",
-        "check": "O valor do crédito deve ser estritamente positivo.",
-        "check_number": 0,
-        "failure_case": -2500,
-        "index": 5
-      },
-      {
-        "schema_context": "Column",
-        "column": "credit_amount",
-        "check": "O valor do crédito deve ser estritamente positivo.",
-        "check_number": 0,
-        "failure_case": -2500,
-        "index": 6
-      },
-      {
-        "schema_context": "Column",
-        "column": "credit_amount",
-        "check": "O valor do crédito deve ser estritamente positivo.",
-        "check_number": 0,
-        "failure_case": -2500,
-        "index": 7
-      },
-      {
-        "schema_context": "Column",
-        "column": "credit_amount",
-        "check": "O valor do crédito excede o teto operacional de 50.000.",
-        "check_number": 1,
-        "failure_case": 999999,
-        "index": 8
-      },
-      {
-        "schema_context": "Column",
-        "column": "credit_amount",
-        "check": "O valor do crédito excede o teto operacional de 50.000.",
-        "check_number": 1,
-        "failure_case": 999999,
-        "index": 9
-      },
-      {
-        "schema_context": "Column",
         "column": "checking_status",
         "check": "not_nullable",
         "check_number": null,
@@ -165,35 +45,35 @@
       },
       {
         "schema_context": "Column",
-        "column": "checking_status",
-        "check": "not_nullable",
-        "check_number": null,
-        "failure_case": NaN,
-        "index": 11
+        "column": "target",
+        "check": "A variável-alvo deve conter unicamente valores binários 0 ou 1.",
+        "check_number": 0,
+        "failure_case": 9,
+        "index": 28
       },
       {
         "schema_context": "Column",
-        "column": "checking_status",
-        "check": "not_nullable",
-        "check_number": null,
-        "failure_case": NaN,
-        "index": 12
+        "column": "target",
+        "check": "A variável-alvo deve conter unicamente valores binários 0 ou 1.",
+        "check_number": 0,
+        "failure_case": 9,
+        "index": 27
       },
       {
         "schema_context": "Column",
-        "column": "checking_status",
-        "check": "not_nullable",
-        "check_number": null,
-        "failure_case": NaN,
-        "index": 13
+        "column": "target",
+        "check": "A variável-alvo deve conter unicamente valores binários 0 ou 1.",
+        "check_number": 0,
+        "failure_case": 9,
+        "index": 26
       },
       {
         "schema_context": "Column",
-        "column": "checking_status",
-        "check": "not_nullable",
-        "check_number": null,
-        "failure_case": NaN,
-        "index": 14
+        "column": "target",
+        "check": "A variável-alvo deve conter unicamente valores binários 0 ou 1.",
+        "check_number": 0,
+        "failure_case": 9,
+        "index": 25
       },
       {
         "schema_context": "Column",
@@ -201,7 +81,7 @@
         "check": "Situação de moradia inválida. Domínios aceitos: ['own', 'rent', 'for free']",
         "check_number": 0,
         "failure_case": "spaceship_station",
-        "index": 15
+        "index": 19
       },
       {
         "schema_context": "Column",
@@ -209,7 +89,7 @@
         "check": "Situação de moradia inválida. Domínios aceitos: ['own', 'rent', 'for free']",
         "check_number": 0,
         "failure_case": "spaceship_station",
-        "index": 16
+        "index": 18
       },
       {
         "schema_context": "Column",
@@ -225,7 +105,127 @@
         "check": "Situação de moradia inválida. Domínios aceitos: ['own', 'rent', 'for free']",
         "check_number": 0,
         "failure_case": "spaceship_station",
-        "index": 18
+        "index": 16
+      },
+      {
+        "schema_context": "Column",
+        "column": "housing",
+        "check": "Situação de moradia inválida. Domínios aceitos: ['own', 'rent', 'for free']",
+        "check_number": 0,
+        "failure_case": "spaceship_station",
+        "index": 15
+      },
+      {
+        "schema_context": "Column",
+        "column": "checking_status",
+        "check": "not_nullable",
+        "check_number": null,
+        "failure_case": NaN,
+        "index": 14
+      },
+      {
+        "schema_context": "Column",
+        "column": "checking_status",
+        "check": "not_nullable",
+        "check_number": null,
+        "failure_case": NaN,
+        "index": 13
+      },
+      {
+        "schema_context": "Column",
+        "column": "checking_status",
+        "check": "not_nullable",
+        "check_number": null,
+        "failure_case": NaN,
+        "index": 12
+      },
+      {
+        "schema_context": "Column",
+        "column": "checking_status",
+        "check": "not_nullable",
+        "check_number": null,
+        "failure_case": NaN,
+        "index": 11
+      },
+      {
+        "schema_context": "Column",
+        "column": "credit_amount",
+        "check": "O valor do crédito excede o teto operacional de 50.000.",
+        "check_number": 1,
+        "failure_case": 999999,
+        "index": 9
+      },
+      {
+        "schema_context": "Column",
+        "column": "client_id",
+        "check": "field_uniqueness",
+        "check_number": null,
+        "failure_case": 100000,
+        "index": 20
+      },
+      {
+        "schema_context": "Column",
+        "column": "credit_amount",
+        "check": "O valor do crédito excede o teto operacional de 50.000.",
+        "check_number": 1,
+        "failure_case": 999999,
+        "index": 8
+      },
+      {
+        "schema_context": "Column",
+        "column": "credit_amount",
+        "check": "O valor do crédito deve ser estritamente positivo.",
+        "check_number": 0,
+        "failure_case": -2500,
+        "index": 7
+      },
+      {
+        "schema_context": "Column",
+        "column": "credit_amount",
+        "check": "O valor do crédito deve ser estritamente positivo.",
+        "check_number": 0,
+        "failure_case": -2500,
+        "index": 6
+      },
+      {
+        "schema_context": "Column",
+        "column": "credit_amount",
+        "check": "O valor do crédito deve ser estritamente positivo.",
+        "check_number": 0,
+        "failure_case": -2500,
+        "index": 5
+      },
+      {
+        "schema_context": "Column",
+        "column": "age",
+        "check": "Violação de maioridade legal: age < 18 anos.",
+        "check_number": 0,
+        "failure_case": -5,
+        "index": 4
+      },
+      {
+        "schema_context": "Column",
+        "column": "age",
+        "check": "Violação de maioridade legal: age < 18 anos.",
+        "check_number": 0,
+        "failure_case": -5,
+        "index": 3
+      },
+      {
+        "schema_context": "Column",
+        "column": "age",
+        "check": "Violação de maioridade legal: age < 18 anos.",
+        "check_number": 0,
+        "failure_case": 15,
+        "index": 2
+      },
+      {
+        "schema_context": "Column",
+        "column": "age",
+        "check": "Violação de maioridade legal: age < 18 anos.",
+        "check_number": 0,
+        "failure_case": 15,
+        "index": 1
       }
     ]
   },

@@ -8,11 +8,11 @@ pipeline_task_status{stage="etapa_3_observability"} 1
 
 # HELP model_auc_roc Area sob a Curva ROC do classificador baseline
 # TYPE model_auc_roc gauge
-model_auc_roc 0.0
+model_auc_roc 0.9797
 
 # HELP model_f1_score F1-Score do classificador baseline
 # TYPE model_f1_score gauge
-model_f1_score 0.0
+model_f1_score 0.8904
 
 # HELP data_validation_violations_total Total de violacoes de contrato interceptadas
 # TYPE data_validation_violations_total counter
@@ -28,8 +28,8 @@ drift_rate_percentage 0.0
 
 # HELP process_cpu_usage_percent Percentual de CPU utilizado pelo processo
 # TYPE process_cpu_usage_percent gauge
-process_cpu_usage_percent 25.7
+process_cpu_usage_percent 6.0
 
 # HELP process_memory_rss_bytes Memoria residente (RSS) utilizada pelo processo
 # TYPE process_memory_rss_bytes gauge
-process_memory_rss_bytes 30912020
+process_memory_rss_bytes 444669624

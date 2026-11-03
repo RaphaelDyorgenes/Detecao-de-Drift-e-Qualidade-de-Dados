@@ -1,5 +1,5 @@
 {
-    "timestamp": "2026-11-03T17:28:42.251177+00:00",
+    "timestamp": "2026-11-03T19:36:50.272034+00:00",
     "pipeline_version": "1.0.0",
     "stages": {
         "etapa_0_data_preparation": {
@@ -12,7 +12,7 @@
         },
         "etapa_1_model_training": {
             "status": "SUCCESS",
-            "auc_roc": 0.0
+            "auc_roc": 0.9797
         },
         "etapa_2_drift_detection": {
             "status": "SUCCESS",
@@ -24,11 +24,11 @@
         }
     },
     "model_performance": {
-        "auc_roc": 0.0,
-        "accuracy": 0.0,
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1_score": 0.0,
+        "auc_roc": 0.9797,
+        "accuracy": 0.937,
+        "precision": 0.9552,
+        "recall": 0.8339,
+        "f1_score": 0.8904,
         "training_duration_seconds": 0.0,
         "algorithm": "XGBoost"
     },
@@ -46,14 +46,14 @@
         "detailed_tests": []
     },
     "infrastructure": {
-        "cpu_percent": 25.7,
-        "process_memory_rss_mb": 29.48,
-        "system_memory_percent": 54.4,
-        "system_memory_available_mb": 7422.76,
+        "cpu_percent": 6.0,
+        "process_memory_rss_mb": 424.07,
+        "system_memory_percent": 61.3,
+        "system_memory_available_mb": 6296.95,
         "python_version": "3.13.14",
         "platform": "win32"
     },
     "timing": {
-        "observability_duration_seconds": 3.3337
+        "observability_duration_seconds": 1.9418
     }
 }
