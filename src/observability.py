@@ -1,7 +1,5 @@
 """
-=============================================================================
-Tech Challenge 04 — Etapa 3: Observabilidade de Pipelines e Modelos
-=============================================================================
+Etapa 3: Observabilidade de Pipelines e Modelos
 
 Módulo responsável pela centralização de telemetria operacional, rastreamento
 de ciclo de vida e experimentos via MLflow, exportação de métricas para
@@ -31,7 +29,6 @@ Componentes Integrados:
 
     4. Dashboard Operacional Interativo (HTML):
        - Visualização executiva consolidada em reports/pipeline_monitoring_dashboard.html.
-=============================================================================
 """
 
 import json
@@ -360,8 +357,7 @@ def export_prometheus_metrics(telemetry: Dict[str, Any]) -> Path:
 
 def generate_monitoring_dashboard_html(telemetry: Dict[str, Any], mlflow_run_id: str) -> Path:
     """
-    Gera um dashboard executivo interativo HTML com design moderno, responsivo
-    e autossuficiente para apresentação aos avaliadores.
+    Gera o dashboard HTML de monitoramento (arquivo único, sem servidor).
     """
     dashboard_path = REPORTS_DIR / "pipeline_monitoring_dashboard.html"
 
@@ -396,7 +392,7 @@ def generate_monitoring_dashboard_html(telemetry: Dict[str, Any], mlflow_run_id:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Observabilidade — Tech Challenge 04</title>
+    <title>Dashboard de Observabilidade - Tech Challenge 04</title>
     <style>
         :root {{
             --bg-primary: #0f172a;
@@ -593,7 +589,7 @@ def generate_monitoring_dashboard_html(telemetry: Dict[str, Any], mlflow_run_id:
     <div class="header">
         <div class="header-title">
             <h1>Observabilidade & Monitoramento Contínuo</h1>
-            <p>Tech Challenge 04 — Sustentação de Modelos de Credit Scoring | Pós-Tech FIAP</p>
+            <p>Sustentação de Modelos de Credit Scoring | Pós-Tech FIAP</p>
         </div>
         <div class="header-badges">
             <span class="badge badge-blue">MLflow Tracking Ativo</span>

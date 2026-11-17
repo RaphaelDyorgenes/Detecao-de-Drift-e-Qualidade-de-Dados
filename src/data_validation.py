@@ -1,7 +1,5 @@
 """
-=============================================================================
-Tech Challenge 04 — Etapa 1: Validação de Dados e Contratos (Data Contracts)
-=============================================================================
+Etapa 1: Validação de Dados e Contratos (Data Contracts)
 
 Módulo responsável pela especificação, execução e auditoria de contratos
 formais de qualidade de dados (Data Contracts) utilizando a biblioteca Pandera.
@@ -30,7 +28,6 @@ Fluxo Operacional:
     - Injeção controlada de anomalias sintéticas para teste de estresse defensivo.
     - Validação do lote corrompido (comportamento esperado: REJEITADO com interceptação).
     - Emissão de relatórios estruturados de auditoria em console e arquivo JSON.
-=============================================================================
 """
 
 import json
@@ -48,9 +45,7 @@ from pandera.pandas import Check, Column, DataFrameSchema
 # Desativa alertas redundantes de importação
 os.environ["DISABLE_PANDERA_IMPORT_WARNING"] = "True"
 
-# ---------------------------------------------------------------------------
 # Configurações de Diretórios
-# ---------------------------------------------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DATA_REFERENCE = PROJECT_ROOT / "data" / "reference"
 REPORTS_DIR = PROJECT_ROOT / "reports"
@@ -61,9 +56,7 @@ def ensure_reports_dir() -> None:
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
 
 
-# =============================================================================
 # Definição Formal do Contrato de Dados (Pandera Schema)
-# =============================================================================
 
 def build_credit_contract_schema() -> DataFrameSchema:
     """
@@ -215,9 +208,7 @@ def build_credit_contract_schema() -> DataFrameSchema:
     return schema
 
 
-# =============================================================================
 # Execução da Validação e Registro de Auditoria
-# =============================================================================
 
 def validate_dataset(
     df: pd.DataFrame,
@@ -289,9 +280,7 @@ def validate_dataset(
         return False, report
 
 
-# =============================================================================
 # Injeção Controlada de Anomalias para Teste de Estresse (Falsificação Defensiva)
-# =============================================================================
 
 def create_corrupted_dataset_for_testing(
     df_clean: pd.DataFrame,
@@ -354,9 +343,7 @@ def create_corrupted_dataset_for_testing(
     return df_bad
 
 
-# =============================================================================
 # Execução Principal e Relatório Consolidado
-# =============================================================================
 
 def run_validation_pipeline() -> Tuple[Dict[str, Any], Dict[str, Any]]:
     """

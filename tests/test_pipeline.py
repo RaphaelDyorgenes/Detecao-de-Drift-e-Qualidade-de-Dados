@@ -1,7 +1,5 @@
 """
-=============================================================================
-Tech Challenge 04 — Bateria de Testes Automatizados (Pytest)
-=============================================================================
+Bateria de Testes Automatizados (Pytest)
 
 Suite de testes automatizados para verificação da integridade das 4 etapas
 do pipeline de Observabilidade, Detecção de Drift e Governança de Modelos:
@@ -16,7 +14,6 @@ do pipeline de Observabilidade, Detecção de Drift e Governança de Modelos:
       dos artefatos de telemetria e integridade dos relatórios HTML.
     - Testes de Governança e LGPD: Validação de ausência de vazamento de PII
       e uso estrito de chave sintética pseudonimizada.
-=============================================================================
 """
 
 import json
@@ -61,9 +58,7 @@ def production_data() -> pd.DataFrame:
     return df
 
 
-# =============================================================================
 # 1. TESTES DA ETAPA 1: DATA CONTRACTS (PANDERA)
-# =============================================================================
 
 
 def test_pandera_schema_accepts_clean_reference_data(reference_data: pd.DataFrame):
@@ -99,9 +94,7 @@ def test_pandera_schema_rejects_corrupted_batch_strictly(reference_data: pd.Data
     assert any(col in failed_columns for col in ["age", "credit_amount", "checking_status", "housing", "client_id", "target"])
 
 
-# =============================================================================
 # 2. TESTES DA ETAPA 1: MODELO BASELINE (XGBOOST)
-# =============================================================================
 
 
 def test_baseline_model_artifact_exists_and_infers(reference_data: pd.DataFrame):
@@ -143,9 +136,7 @@ def test_baseline_model_metrics_meet_rubric_standards():
     assert accuracy >= 0.80, f"Acurácia ({accuracy}) abaixo do patamar mínimo (0.80)"
 
 
-# =============================================================================
 # 3. TESTES DA ETAPA 2: DETECÇÃO ESTATÍSTICA DE DRIFT
-# =============================================================================
 
 
 def test_drift_detected_in_credit_amount_and_duration(
@@ -181,9 +172,7 @@ def test_drift_reports_generated():
     assert stats_json.exists(), "Auditoria estatística JSON não encontrada"
 
 
-# =============================================================================
 # 4. TESTES DA ETAPA 3: OBSERVABILIDADE E MÉTRICAS
-# =============================================================================
 
 
 def test_observability_telemetry_collection():
@@ -225,9 +214,7 @@ def test_monitoring_dashboard_html_structure():
     assert "table" in html
 
 
-# =============================================================================
 # 5. TESTES DA ETAPA 4: GOVERNANÇA, LGPD E FAIRNESS
-# =============================================================================
 
 
 def test_pii_audit_confirms_no_direct_identifiers(reference_data: pd.DataFrame):

@@ -1,7 +1,5 @@
 """
-=============================================================================
-Tech Challenge 04 — Etapa 1: Treinamento do Modelo Baseline de Risco de Crédito
-=============================================================================
+Etapa 1: Treinamento do Modelo Baseline de Risco de Crédito
 
 Módulo responsável pelo treinamento, validação cruzada, avaliação de desempenho
 e serialização do modelo preditivo baseline de Credit Scoring.
@@ -24,7 +22,6 @@ Metodologia de Modelagem:
         * Precisão e Recall: mensuração do custo de falsos positivos e negativos.
         * Matriz de Confusão e Log-Loss.
     - Serialização do pipeline completo (joblib) e exportação de metadados.
-=============================================================================
 """
 
 import json
@@ -48,9 +45,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from xgboost import XGBClassifier
 
-# ---------------------------------------------------------------------------
 # Configurações de Diretórios
-# ---------------------------------------------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DATA_REFERENCE = PROJECT_ROOT / "data" / "reference"
 MODELS_DIR = PROJECT_ROOT / "models"
@@ -63,9 +58,7 @@ def ensure_directories() -> None:
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
 
 
-# ---------------------------------------------------------------------------
 # Definição dos Grupos de Atributos do German Credit Data
-# ---------------------------------------------------------------------------
 NUMERIC_FEATURES: List[str] = [
     "duration",
     "credit_amount",

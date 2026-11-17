@@ -1,10 +1,8 @@
 """
-=============================================================================
-Tech Challenge 04 — Etapa 4: Governança, LGPD e Análise de Equidade (Fairness)
-=============================================================================
+Etapa 4: Governança, LGPD e Análise de Equidade (Fairness)
 
 Módulo responsável pela auditoria automatizada de conformidade com a LGPD
-(Lei Geral de Proteção de Dados — Lei 13.709/2018), verificação de mitigação
+(Lei Geral de Proteção de Dados - Lei 13.709/2018), verificação de mitigação
 de vieses algorítmicos (Fairness / Disparate Impact) e validação dos princípios
 de Privacy by Design e Privacy by Default.
 
@@ -30,7 +28,6 @@ Escopo de Verificação:
        - Política de retenção regulatória alinhada à Resolução CMN 4.658/BACEN
          e prazos prescricionais do Código Civil/CDC (5 anos).
        - Diretrizes de descarte seguro e revogação de consentimento.
-=============================================================================
 """
 
 import json
@@ -175,9 +172,9 @@ def build_governance_report() -> Dict[str, Any]:
     report: Dict[str, Any] = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "regulatory_framework": {
-            "primary_law": "LGPD — Lei Federal nº 13.709/2018",
+            "primary_law": "LGPD - Lei Federal nº 13.709/2018",
             "sector_regulation": "Resoluções BACEN / CMN nº 4.658 e 4.893 (Segurança Cibernética e Nuvem)",
-            "consumer_code": "Código de Defesa do Consumidor (Lei 8.078/1990 — Art. 43: Cadastro Positivo e Transparência)",
+            "consumer_code": "Código de Defesa do Consumidor (Lei 8.078/1990 - Art. 43: Cadastro Positivo e Transparência)",
         },
         "legal_bases": {
             "primary": {

@@ -1,7 +1,5 @@
 """
-=============================================================================
-Tech Challenge 04 — Etapa 2: Simulação e Detecção Estatística de Drift
-=============================================================================
+Etapa 2: Simulação e Detecção Estatística de Drift
 
 Módulo responsável pela simulação controlada de degradação temporal (Data Drift
 e Concept Drift), geração de inferências em ambiente operacional e detecção
@@ -32,7 +30,6 @@ Entregáveis Deste Módulo:
     - Colunas de inferência anexadas (predição de classe e escore probabilístico).
     - Relatório analítico interativo do Evidently AI (data_drift_report.html).
     - Matriz de testes estatísticos comprovando formalmente as variáveis degradadas.
-=============================================================================
 """
 
 import json
@@ -58,9 +55,7 @@ except Exception:
 from evidently import Report
 from evidently.presets import DataDriftPreset
 
-# ---------------------------------------------------------------------------
 # Configurações de Diretórios
-# ---------------------------------------------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DATA_REFERENCE = PROJECT_ROOT / "data" / "reference"
 DATA_PRODUCTION = PROJECT_ROOT / "data" / "production"
@@ -74,9 +69,7 @@ def ensure_directories() -> None:
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
 
 
-# =============================================================================
 # Funções de Simulação de Data Drift e Concept Drift
-# =============================================================================
 
 def simulate_economic_drift(
     df_clean: pd.DataFrame,
@@ -113,9 +106,7 @@ def simulate_economic_drift(
 
     print(f"\n[SIMULAÇÃO] Aplicando choque de drift econômico (intensidade: '{intensity}')...")
 
-    # -------------------------------------------------------------------------
     # 1. DRIFT EM 'credit_amount': Elevação do montante solicitado (efeito inflacionário)
-    # -------------------------------------------------------------------------
     credit_noise = rng.normal(0, df["credit_amount"].std() * 0.10, size=n)
     drifted_credit = (df["credit_amount"] * cfg["credit_factor"] + credit_noise).round().astype(int)
     # Limitação dentro dos limites plausíveis de mercado
@@ -125,9 +116,7 @@ def simulate_economic_drift(
         f"para {df['credit_amount'].mean():.1f} (acréscimo de +{(df['credit_amount'].mean()/df_clean['credit_amount'].mean()-1)*100:.1f}%)."
     )
 
-    # -------------------------------------------------------------------------
     # 2. DRIFT EM 'duration': Alongamento dos prazos de amortização
-    # -------------------------------------------------------------------------
     duration_noise = rng.integers(-2, 5, size=n)
     drifted_duration = (df["duration"] + cfg["duration_add"] + duration_noise).astype(int)
     df["duration"] = np.clip(drifted_duration, 6, 72)
@@ -136,9 +125,7 @@ def simulate_economic_drift(
         f"para {df['duration'].mean():.1f} meses (acréscimo de +{(df['duration'].mean()/df_clean['duration'].mean()-1)*100:.1f}%)."
     )
 
-    # -------------------------------------------------------------------------
     # 3. DRIFT CATEGÓRICO EM 'checking_status': Deterioração de saldos em conta
-    # -------------------------------------------------------------------------
     # Proporção de clientes com saldo devedor (< 0) é inflacionada artificialmente
     mask_to_deteriorate = rng.random(size=n) < cfg["checking_bias"]
     df.loc[mask_to_deteriorate, "checking_status"] = "<0"
@@ -147,17 +134,13 @@ def simulate_economic_drift(
         f"{(df_clean['checking_status'] == '<0').mean():.1%} para {(df['checking_status'] == '<0').mean():.1%}."
     )
 
-    # -------------------------------------------------------------------------
     # 4. Recálculo das variáveis financeiras derivadas
-    # -------------------------------------------------------------------------
     df["credit_to_duration_ratio"] = (df["credit_amount"] / df["duration"].replace(0, 1)).round(2)
     df["installment_rate_burden"] = (
         df["installment_commitment"] * df["credit_amount"] / 100.0
     ).round(2)
 
-    # -------------------------------------------------------------------------
     # 5. CONCEPT DRIFT: Aumento da inadimplência em tomadores vulneráveis
-    # -------------------------------------------------------------------------
     # Em cenários de crise, clientes com dívida elevada e saldo negativo têm risco amplificado
     high_risk_condition = (df["credit_amount"] > df["credit_amount"].median()) & (
         df["checking_status"] == "<0"
@@ -173,9 +156,7 @@ def simulate_economic_drift(
     return df
 
 
-# =============================================================================
 # Métodos Estatísticos de Detecção de Drift
-# =============================================================================
 
 def calculate_psi(
     expected: pd.Series,
@@ -297,9 +278,7 @@ def calculate_categorical_chi2(
     return chi2_stat, p_value, drift_detected
 
 
-# =============================================================================
 # Execução dos Testes e Geração do Relatório Evidently AI
-# =============================================================================
 
 def execute_statistical_audit(
     df_ref: pd.DataFrame,
@@ -452,9 +431,7 @@ def generate_evidently_report(
     print(f"[SUCESSO] Sumário JSON do Evidently persistido em: {output_json_path}")
 
 
-# =============================================================================
 # Pipeline Principal da Etapa 2
-# =============================================================================
 
 def run_drift_pipeline(
     drift_intensity: str = "moderate",

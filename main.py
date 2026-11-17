@@ -1,7 +1,5 @@
 """
-=============================================================================
-Tech Challenge 04 — Pipeline Principal (Orquestrador)
-=============================================================================
+Pipeline Principal (Orquestrador)
 
 Módulo orquestrador responsável pela execução integrada e sequencial
 das etapas do projeto de Observabilidade, Detecção de Drift e Governança:
@@ -19,7 +17,6 @@ Uso:
     python main.py --etapa 2    -> Executa simulação de drift e relatórios Evidently
     python main.py --etapa 3    -> Executa observabilidade, MLflow e dashboard
     python main.py --etapa 4    -> Executa governança, LGPD e análise causal
-=============================================================================
 """
 
 import argparse
@@ -75,7 +72,7 @@ def main() -> None:
     modular dos componentes de pipeline.
     """
     parser = argparse.ArgumentParser(
-        description="Tech Challenge 04 — Observabilidade Contínua e Detecção de Drift"
+        description="Observabilidade Contínua e Detecção de Drift"
     )
     parser.add_argument(
         "--etapa",
@@ -87,7 +84,7 @@ def main() -> None:
     args = parser.parse_args()
 
     print("\n" + "=" * 76)
-    print("  TECH CHALLENGE 04 — SUSTENTAÇÃO E OBSERVABILIDADE EM MACHINE LEARNING")
+    print("  TECH CHALLENGE 04 - SUSTENTAÇÃO E OBSERVABILIDADE EM MACHINE LEARNING")
     print("  Instituição: Pós-Tech / FIAP | Machine Learning Engineering")
     print("  Dataset Oficial: German Credit Data (Kaggle/UCI - Statlog)")
     print("=" * 76)

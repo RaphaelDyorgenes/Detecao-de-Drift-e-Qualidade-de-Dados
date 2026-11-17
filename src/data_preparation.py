@@ -1,7 +1,5 @@
 """
-=============================================================================
-Tech Challenge 04 — Módulo de Obtenção e Preparação dos Dados
-=============================================================================
+Módulo de Obtenção e Preparação dos Dados
 
 Módulo responsável pela aquisição do dataset German Credit Data (Kaggle/UCI),
 pela padronização de suas variáveis, pela engenharia de atributos financeiros
@@ -23,7 +21,6 @@ A metodologia empregada realiza:
        amostras no conjunto de Referência e 5.000 amostras no conjunto de
        Produção, atendendo aos critérios de suficiência volumétrica do projeto
        e viabilizando alto poder estatístico nos testes de hipótese de Drift.
-=============================================================================
 """
 
 import argparse
@@ -34,9 +31,7 @@ import numpy as np
 import pandas as pd
 from sklearn.datasets import fetch_openml
 
-# ---------------------------------------------------------------------------
 # Configurações de Diretórios
-# ---------------------------------------------------------------------------
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = PROJECT_ROOT / "data"
 DATA_RAW = DATA_DIR / "raw"
